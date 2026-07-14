@@ -31,6 +31,11 @@
     // Update SITE_URL + PREVIEW_SITE_URL to the custom domain once connected.
     "PREVIEW_SITE_URL": "https://greennestco.pages.dev",
     "GH_REPO": "jack1999adams-svg/greennestco",
+    // Publish → rebuild fires a repository_dispatch via the Nova GitHub App
+    // (installed on all repos) — no per-instance PAT needed. GH_APP_PRIVATE_KEY
+    // is a worker secret.
+    "GH_APP_ID": "4279465",
+    "GH_APP_INSTALLATION_ID": "146072019",
     "LEAD_TO_EMAIL": "hello@greennestco.co.uk",
     "LEAD_FROM_EMAIL": "onboarding@resend.dev",
     // Design tokens editable in the portal's Design page. Each cssVar must exist
