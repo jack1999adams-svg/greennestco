@@ -9,8 +9,10 @@ interface Props {
   image?: string;
   imageAlt?: string;
   extras?: Record<string, any>;
+  ancestors?: Array<{ path: string; title: string }>;
 }
-const { template, title, html, image, imageAlt = '', extras = {} } = Astro.props;
+const { template, title, html, image, imageAlt = '', extras = {}, ancestors = [] } = Astro.props;
+const trail = [{ path: '/', title: 'Home' }, ...ancestors];
 ---
 
 {template === 'landing' ? (
@@ -31,6 +33,12 @@ const { template, title, html, image, imageAlt = '', extras = {} } = Astro.props
 )}
 
 <article class="container np-page">
+  {ancestors.length > 0 && (
+    <nav class="np-crumbs" aria-label="Breadcrumb">
+      {trail.map((c) => (<><a href={c.path}>{c.title}</a><span aria-hidden="true"> / </span></>))}
+      <span aria-current="page">{title}</span>
+    </nav>
+  )}
   <div class="prose" set:html={html} />
 
   {template === 'contact' && (extras.email || extras.phone || extras.address) && (
@@ -54,6 +62,9 @@ const { template, title, html, image, imageAlt = '', extras = {} } = Astro.props
   .np-hero-sub { max-width: 40rem; margin: 1rem auto 0; color: var(--text, #4c4f46); font-size: 1.125rem; }
   .np-cta { display: inline-block; margin-top: 1.5rem; background: var(--brand, #8a9a7b); color: #fff; padding: 0.7rem 1.6rem; border-radius: 999px; font-weight: 600; text-decoration: none; }
   .np-cta:hover { background: var(--brand-dark, #6d7d5f); }
+  .np-crumbs { grid-column: 1 / -1; font-size: 0.85rem; color: var(--brand-dark, #6d7d5f); margin-bottom: 0.5rem; }
+  .np-crumbs a { color: var(--brand-dark, #6d7d5f); }
+  .np-crumbs [aria-current] { color: var(--text, #4c4f46); }
   .np-page { padding-block: 2.5rem 4rem; display: grid; gap: 2.5rem; grid-template-columns: minmax(0, 1fr); }
   .np-page:has(.np-contact-card) { grid-template-columns: minmax(0, 1fr) 20rem; align-items: start; }
   @media (max-width: 780px) { .np-page:has(.np-contact-card) { grid-template-columns: minmax(0, 1fr); } }
