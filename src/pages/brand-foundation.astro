@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import { values } from '../data/values.mjs';
+import { categories } from '../data/categories.mjs';
+
+const sourcing = [
+  { t: 'UK First', d: 'Supporting local artisans and workshops.' },
+  { t: 'Ethical International Partnerships', d: 'Only when materials aren’t available locally (e.g. bamboo).' },
+  { t: 'Hand-Crafted First', d: 'Prioritising pieces shaped by human hands.' },
+  { t: 'Natural Materials Only', d: 'Wood, clay, cotton, wool, linen, jute, seagrass, hemp.' },
+  { t: 'Low-Impact Supply Chains', d: 'Minimising waste and transport.' },
+];
+const materials = [
+  'Natural woods', 'Reclaimed wood', 'Ethical bamboo', 'Recycled cotton', 'Reclaimed fibres',
+  'Natural clays', 'Stoneware', 'Jute', 'Seagrass', 'Hemp', 'Linen', 'Plant-based waxes', 'Essential oils',
+];
+const leaf = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2.5 1.5 5 .5 8.5A7 7 0 0 1 11 20z"/><path d="M2 22c1.5-3.5 3-5 8-6"/></svg>`;
+---
+
+<Base
+  title="Brand Foundation — Green Nest Co"
+  description="The foundation of Green Nest Co: our philosophy, values, sourcing principles, materials, product universe, sustainability commitments and brand manifesto."
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">Brand Foundation</span>
+      <h1>Our Foundation</h1>
+      <p class="lede">The beliefs, materials and makers that shape everything we curate.</p>
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section>
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Our Philosophy</span>
+        <h2>Home as a sanctuary — inside and out</h2>
+        <p class="lede">
+          We curate with intention. We choose materials that feel natural beneath the hand.
+          We honour the makers who shape each piece. We celebrate the quiet beauty of everyday
+          living — rooted in calm, nature, craftsmanship, longevity, and simplicity.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values (3x2) -->
+  <section class="section-soft">
+    <div class="container">
+      <div class="section-head center"><span class="kicker">Our Values</span><h2>Six things we hold to</h2></div>
+      <div class="grid-3">
+        {values.map((v) => (
+          <div class="value">
+            <div class="card-icon" set:html={leaf} />
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sourcing Principles (2-col) -->
+  <section>
+    <div class="container">
+      <div class="section-head"><span class="kicker">Sourcing Principles</span><h2>How we choose our partners and pieces</h2></div>
+      <div class="grid-2">
+        {sourcing.map((s) => (
+          <div class="card"><h3>{s.t}</h3><p>{s.d}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Materials -->
+  <section class="section-linen">
+    <div class="container">
+      <div class="section-head center"><span class="kicker">Materials We Use</span><h2>Natural, renewable, honest</h2></div>
+      <div class="pill-row" style="justify-content:center">
+        {materials.map((m) => <span class="pill">{m}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Universe -->
+  <section>
+    <div class="container">
+      <div class="section-head center"><span class="kicker">Product Universe</span><h2>What lives within the collection</h2></div>
+      <div class="grid-3">
+        {categories.map((c) => (
+          <a class="card" href={`/categories/${c.slug}/`} style="color:inherit">
+            <span class="chip clay">{c.tone}</span>
+            <h3 style="margin-top:14px">{c.name}</h3>
+            <p>{c.includes}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Manifesto -->
+  <section class="band">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Brand Manifesto</span>
+        <h2>A calmer home — inside and out</h2>
+      </div>
+      <div class="doc" style="color:var(--on-dark)">
+        <p>
+          We believe in natural materials, honest craftsmanship, and the quiet beauty of everyday
+          rituals. We believe in choosing fewer, better things — pieces that feel grounding,
+          intentional, and made with care.
+        </p>
+        <p>
+          We honour the makers who shape our pottery, weave our textiles, craft our furniture,
+          and pour our candles. We celebrate the textures of nature: wood, clay, cotton, bamboo,
+          wool, wax, and greenery.
+        </p>
+        <p>
+          We choose sustainability not because it’s fashionable, but because it’s necessary. We
+          support local communities. We prioritise recycled natural fibres. We value the imperfect,
+          the hand-touched, the thoughtfully made.
+        </p>
+        <p style="margin-bottom:0">
+          GNc is more than a brand. It is a way of living — slower, softer, and more connected to
+          the world around us.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container text-center">
+      <a class="btn btn-primary btn-lg" href="/rooms/">Shop the Collection</a>
+    </div>
+  </section>
+</Base>

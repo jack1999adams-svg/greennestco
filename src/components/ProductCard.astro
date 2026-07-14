@@ -1,0 +1,41 @@
+---
+import Placeholder from './Placeholder.astro';
+import { partnerById } from '../data/partners.mjs';
+import { categoryBySlug } from '../data/categories.mjs';
+
+interface Props {
+  product: {
+    slug: string;
+    name: string;
+    partner: string;
+    category: string;
+    description: string;
+    href: string;
+    image?: string;
+    imageAlt?: string;
+  };
+}
+const { product } = Astro.props;
+const partner = partnerById(product.partner);
+const cat = categoryBySlug(product.category);
+const tone = ['pottery-ceramics', 'plants', 'furniture'].includes(product.category) ? 'sage' : 'sand';
+---
+
+<article class="product-card">
+  {product.image
+    ? <img src={product.image} alt={product.imageAlt ?? product.name} loading="lazy" style="aspect-ratio:4/3;object-fit:cover" />
+    : <Placeholder label={product.name} tone={tone} />}
+  <div class="product-body">
+    <div class="product-meta">
+      {cat && <span class="chip">{cat.name}</span>}
+    </div>
+    <h3>{product.name}</h3>
+    <p>{product.description}</p>
+    {partner && <span class="product-partner">Curated from {partner.name}</span>}
+    <div class="product-actions">
+      <a class="btn btn-outline" href={product.href} rel="sponsored noopener noreferrer" target="_blank">
+        View Product
+      </a>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+// Baked placeholder page for NovaPortal's instant draft preview: the real
+// Journal post layout with {{NOVA_*}} sentinels as the data. The portal fetches
+// this page, substitutes a draft's content and serves it behind the client's
+// login. Noindexed; carries no content of its own. The table-of-contents rail
+// is omitted (it derives from body headings, which only exist per draft).
+const all = await getCollection('journal');
+const related = all
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title={'{{NOVA_TITLE}} — Green Nest Co'}
+  description={'{{NOVA_DESCRIPTION}}'}
+  image={'{{NOVA_IMAGE}}'}
+  noindex={true}
+>
+  <article>
+    <div class="container post-layout">
+      <aside class="post-col post-col-left">
+        <div class="post-rail">
+          <div class="rail-card">
+            <h4>Green Nest Co</h4>
+            <p>A calmer home creates a calmer life.</p>
+            <a class="btn btn-primary" href="/rooms/" style="width:100%;margin-top:8px">Shop the Collection</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="post-main">
+        <div class="journal-meta post-meta">
+          <span class="chip clay">{'{{NOVA_CATEGORY}}'}</span>
+          <span>{'{{NOVA_DATE}}'}</span>
+          <span>·</span>
+          <span>{'{{NOVA_READ_MINS}}'} min read</span>
+        </div>
+        <h1 class="post-title">{'{{NOVA_TITLE}}'}</h1>
+        <img class="post-featured" src={'{{NOVA_IMAGE}}'} alt={'{{NOVA_IMAGE_ALT}}'} fetchpriority="high" />
+        <div class="prose">
+          <Fragment set:html={'{{NOVA_BODY}}'} />
+        </div>
+        <p class="post-back"><a href="/journal/">← All Journal entries</a></p>
+      </div>
+
+      <aside class="post-col post-col-right">
+        <div class="post-rail">
+          <div class="rail-card rail-cta">
+            <h4>Stay in the nest</h4>
+            <p>Slow-living notes, once in a while.</p>
+            <a class="btn btn-clay" href="/#newsletter" style="width:100%">Subscribe</a>
+          </div>
+          {related.length > 0 && (
+            <div class="rail-card">
+              <h4>More from the Journal</h4>
+              <ul class="rail-posts">
+                {related.map((p) => (
+                  <li>
+                    <a href={`/journal/${p.id}/`}>{p.data.title}</a>
+                    <span>{fmt(p.data.date)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </aside>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+
+const stand = [
+  { t: 'Inspired by nature', d: 'Greenery, natural textures and materials that feel alive.' },
+  { t: 'Crafted with intention', d: 'Handmade pieces with soul, shaped by human hands.' },
+  { t: 'Designed for calm living', d: 'Uncluttered spaces that help you breathe easier.' },
+  { t: 'Rooted in sustainability', d: 'Natural materials, ethical makers, low-impact choices.' },
+  { t: 'Guided by simplicity', d: 'Fewer, better things — timeless over trend.' },
+  { t: 'Made to last', d: 'Longevity through seasons and years, not throwaway homeware.' },
+];
+const leaf = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2.5 1.5 5 .5 8.5A7 7 0 0 1 11 20z"/><path d="M2 22c1.5-3.5 3-5 8-6"/></svg>`;
+---
+
+<Base
+  title="About — Green Nest Co"
+  description="Green Nest Co was created from a simple belief: home should feel like a sanctuary, inside and out. Meet the philosophy and the makers behind GNc."
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">Our Story</span>
+      <h1>Home should feel like a sanctuary — inside and out</h1>
+      <p class="lede">
+        Born from a love of natural materials, slow living, and the quiet rituals of everyday life.
+      </p>
+    </div>
+  </section>
+
+  <!-- Who We Are (2-column) -->
+  <section>
+    <div class="container">
+      <div class="split">
+        <div class="split-body">
+          <span class="kicker">Who We Are</span>
+          <h2>Timelessness over trends</h2>
+          <p>
+            Green Nest Co curates pieces that bring warmth, intention, and balance into the spaces
+            we call home. We believe a home should feel lived-in, grounded, and connected to nature —
+            where the textures are soft, the colours gentle, and the objects you choose feel meaningful.
+          </p>
+          <p>
+            GNc is not about trends. It is about choosing fewer, better things — pieces that feel
+            honest, tactile, and made with care.
+          </p>
+        </div>
+        <div class="split-media">
+          <Placeholder label="Natural materials" tone="sage" shape="tall" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Stand For (3-col) -->
+  <section class="section-soft">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">What We Stand For</span>
+        <h2>The principles behind every piece</h2>
+      </div>
+      <div class="grid-3">
+        {stand.map((s) => (
+          <div class="value">
+            <div class="card-icon" set:html={leaf} />
+            <h3>{s.t}</h3>
+            <p>{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Behind the Scenes -->
+  <section class="band">
+    <div class="container">
+      <div class="split reverse">
+        <div class="split-media">
+          <Placeholder label="The makers" tone="sage" shape="wide" />
+        </div>
+        <div class="split-body">
+          <span class="kicker">Behind the Scenes</span>
+          <h2>Every piece begins with a maker</h2>
+          <p class="lede">
+            A potter, a weaver, a carpenter, an artist. We celebrate the hands and the stories
+            behind each creation — and the makers who shape our pottery, weave our textiles,
+            craft our furniture, and pour our candles.
+          </p>
+          <p class="mt-40"><a class="btn btn-outline-light btn-lg" href="/contact/">Contact Us</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

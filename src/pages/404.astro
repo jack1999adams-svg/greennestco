@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Page not found — Green Nest Co"
+  description="The page you were looking for has wandered off. Find your way back to a calmer home."
+  noindex={true}
+>
+  <section class="page-hero">
+    <div class="container text-center">
+      <span class="kicker">404</span>
+      <h1>This page has wandered off</h1>
+      <p class="lede" style="margin:0 auto 32px">
+        The page you were looking for isn’t here. Let’s find your way back to a calmer home.
+      </p>
+      <div class="hero-actions" style="justify-content:center">
+        <a class="btn btn-primary btn-lg" href="/">Back to home</a>
+        <a class="btn btn-outline btn-lg" href="/rooms/">Shop by Room</a>
+      </div>
+    </div>
+  </section>
+</Base>

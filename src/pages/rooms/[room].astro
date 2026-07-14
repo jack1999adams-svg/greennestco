@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { rooms, roomBySlug } from '../../data/rooms.mjs';
+import { categoryBySlug } from '../../data/categories.mjs';
+import { productsInRoom } from '../../data/products.mjs';
+
+export function getStaticPaths() {
+  return rooms.map((room) => ({ params: { room: room.slug }, props: { room } }));
+}
+
+const { room } = Astro.props;
+const products = productsInRoom(room.slug);
+const roomCategories = room.categories.map(categoryBySlug).filter(Boolean);
+---
+
+<Base
+  title={`${room.name} — Green Nest Co`}
+  description={`${room.name}: ${room.tagline}. ${room.intro}`}
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">Shop by Room</span>
+      <h1>{room.name}</h1>
+      <p class="lede">{room.intro}</p>
+    </div>
+  </section>
+
+  <!-- Categories in this room -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="pill-row">
+        {roomCategories.map((c) => (
+          <a class="pill" href={`/categories/${c.slug}/`}>{c.name}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Curated products -->
+  <section style="padding-top:0">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Curated for this space</span>
+        <h2>Pieces we love for the {room.name.toLowerCase()}</h2>
+      </div>
+      {products.length > 0 ? (
+        <div class="grid-3">
+          {products.map((product) => <ProductCard product={product} />)}
+        </div>
+      ) : (
+        <p class="muted">This edit is being curated — check back soon, or explore the wider collection.</p>
+      )}
+      <p class="text-center mt-48"><a class="btn btn-outline" href="/categories/">Browse all categories</a></p>
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>

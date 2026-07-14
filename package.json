@@ -1,0 +1,21 @@
+{
+  "name": "greennestco",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Green Nest Co (GNc) — a calmer home creates a calmer life. Curated natural-living homeware. Built with Astro, content managed in NovaPortal, deployed on Cloudflare Pages.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && wrangler pages deploy dist --project-name greennestco --branch main --commit-dirty=true"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.0",
+    "astro": "^5.13.0",
+    "marked": "^12.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.107.0"
+  }
+}

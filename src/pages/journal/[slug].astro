@@ -1,0 +1,91 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('journal');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+
+const all = await getCollection('journal');
+const related = all
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const toc = headings.filter((h) => h.depth === 2);
+const readMins = Math.max(1, Math.round(post.body.split(/\s+/).length / 200));
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title={`${post.data.title} — Green Nest Co`}
+  description={post.data.description}
+  image={post.data.image}
+>
+  <article>
+    <div class="container post-layout">
+      <aside class="post-col post-col-left">
+        <div class="post-rail">
+          <div class="rail-card">
+            <h4>Green Nest Co</h4>
+            <p>A calmer home creates a calmer life. Curated natural-living homeware for indoor and outdoor spaces.</p>
+            <a class="btn btn-primary" href="/rooms/" style="width:100%;margin-top:8px">Shop the Collection</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="post-main">
+        <div class="journal-meta post-meta">
+          <span class="chip clay">{post.data.categoryLabel}</span>
+          <span>{fmt(post.data.date)}</span>
+          <span>·</span>
+          <span>{readMins} min read</span>
+        </div>
+        <h1 class="post-title">{post.data.title}</h1>
+        {post.data.image
+          ? <img class="post-featured" src={post.data.image} alt={post.data.imageAlt} fetchpriority="high" />
+          : <Placeholder label={post.data.title} tone="sand" shape="wide" class="post-featured" />}
+        <div class="prose">
+          <Content />
+        </div>
+        <p class="post-back"><a href="/journal/">← All Journal entries</a></p>
+      </div>
+
+      <aside class="post-col post-col-right">
+        <div class="post-rail">
+          {toc.length > 2 && (
+            <nav class="rail-card toc" aria-label="In this article">
+              <h4>In this article</h4>
+              <ul>
+                {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+              </ul>
+            </nav>
+          )}
+          {related.length > 0 && (
+            <div class="rail-card">
+              <h4>More from the Journal</h4>
+              <ul class="rail-posts">
+                {related.map((p) => (
+                  <li>
+                    <a href={`/journal/${p.id}/`}>{p.data.title}</a>
+                    <span>{fmt(p.data.date)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div class="rail-card rail-cta">
+            <h4>Stay in the nest</h4>
+            <p>Slow-living notes, once in a while.</p>
+            <a class="btn btn-clay" href="/#newsletter" style="width:100%">Subscribe</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </article>
+</Base>

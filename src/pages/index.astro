@@ -1,0 +1,213 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { rooms } from '../data/rooms.mjs';
+import { values, collections } from '../data/values.mjs';
+import { featuredProducts } from '../data/products.mjs';
+
+const featured = featuredProducts().slice(0, 4);
+
+const journal = (await getCollection('journal'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const leaf = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2.5 1.5 5 .5 8.5A7 7 0 0 1 11 20z"/><path d="M2 22c1.5-3.5 3-5 8-6"/></svg>`;
+---
+
+<Base
+  title="Green Nest Co — A calmer home creates a calmer life"
+  description="Green Nest Co (GNc) curates natural-materials homeware for indoor and outdoor living — sustainable, handcrafted and UK-first. A calmer home creates a calmer life."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="emblem">
+        <svg viewBox="0 0 108 108" fill="none" aria-hidden="true">
+          <circle cx="54" cy="54" r="50" stroke="#2e4034" stroke-width="1.4" />
+          <path d="M74 33c-24 2-41 17-43 39 0 9 2 13 2 13s7 0 13-4c18-11 26-30 28-48Z" fill="#2e4034" />
+          <path d="M62 43c-11 8-19 19-23 34" stroke="#f6f1e7" stroke-width="1.6" stroke-linecap="round" opacity="0.7" />
+        </svg>
+      </span>
+      <span class="kicker">Natural Living • Timeless Design</span>
+      <h1>A calmer home creates a calmer life.</h1>
+      <p class="lede">
+        Thoughtfully curated pieces for indoor and outdoor living — natural materials,
+        honest craftsmanship, and the quiet beauty of everyday rituals.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="/rooms/">Shop the Collection</a>
+        <a class="btn btn-outline btn-lg" href="/about/">Our Story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop by Room -->
+  <section>
+    <div class="container">
+      <div class="section-head center">
+        <hr class="eyebrow-rule" />
+        <span class="kicker">Shop by Room</span>
+        <h2>A place for everything, and calm in every space</h2>
+        <p class="lede">From the living room to the garden, curated for the way each space is lived in.</p>
+      </div>
+      <div class="room-grid">
+        {rooms.map((room) => (
+          <a class="tile" href={`/rooms/${room.slug}/`}>
+            <Placeholder label={room.name} tone={room.tone === 'clay' ? 'sand' : 'sage'} />
+            <div class="tile-body">
+              <h3>{room.name}</h3>
+              <p>{room.tagline}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Collections -->
+  <section class="section-soft">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Featured Collections</span>
+        <h2>Curated worlds to wander</h2>
+      </div>
+      <div class="grid-3">
+        {collections.map((c) => (
+          <a class="tile" href={c.href}>
+            <Placeholder label={c.name} tone={c.tone === 'clay' ? 'sand' : 'sage'} shape="wide" />
+            <div class="tile-body">
+              <h3>{c.name}</h3>
+              <p>{c.blurb}</p>
+              <span class="tile-more">Explore →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Philosophy -->
+  <section class="quote-band">
+    <div class="container">
+      <span class="kicker">Our Philosophy</span>
+      <blockquote>
+        Home should feel like a sanctuary — inside and out. We curate with intention,
+        choosing fewer, better things: pieces that feel honest, tactile, and made with care.
+      </blockquote>
+      <cite>The GNc philosophy</cite>
+    </div>
+  </section>
+
+  <!-- New Arrivals -->
+  <section>
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">New Arrivals</span>
+        <h2>Recently added to the collection</h2>
+        <p class="lede">A rotating edit of pieces from our partner makers and growers.</p>
+      </div>
+      <div class="grid-4">
+        {featured.map((product) => <ProductCard product={product} />)}
+      </div>
+      <p class="text-center mt-48"><a class="btn btn-outline" href="/categories/">Browse all categories</a></p>
+    </div>
+  </section>
+
+  <!-- Our Values -->
+  <section class="section-linen">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Our Values</span>
+        <h2>What we choose, and why</h2>
+      </div>
+      <div class="grid-3">
+        {values.map((v) => (
+          <div class="value">
+            <div class="card-icon" set:html={leaf} />
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Outdoor Living Preview -->
+  <section class="band">
+    <div class="container">
+      <div class="split">
+        <div class="split-media">
+          <Placeholder label="Outdoor Living" tone="sage" shape="wide" />
+        </div>
+        <div class="split-body">
+          <span class="kicker">Outdoor Living</span>
+          <h2>Your home, extended under open sky</h2>
+          <p class="lede">
+            A place to unwind, gather, and reconnect with nature. Weather-honest furniture,
+            natural-wax lanterns and hand-crafted planters for evenings that linger.
+          </p>
+          <p class="mt-40"><a class="btn btn-outline-light btn-lg" href="/outdoor-living/">Explore Outdoor Living</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journal Preview -->
+  <section>
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">From the Journal</span>
+        <h2>Notes on slow, intentional living</h2>
+      </div>
+      {journal.length > 0 ? (
+        <div class="grid-3">
+          {journal.map((post) => (
+            <a class="journal-card" href={`/journal/${post.id}/`}>
+              {post.data.image
+                ? <img src={post.data.image} alt={post.data.imageAlt} loading="lazy" />
+                : <Placeholder label={post.data.title} tone="sand" shape="wide" />}
+              <div class="journal-card-body">
+                <div class="journal-meta">
+                  <span class="chip clay">{post.data.categoryLabel}</span>
+                  <span>{fmt(post.data.date)}</span>
+                </div>
+                <h3>{post.data.title}</h3>
+                <p>{post.data.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-center muted">The Journal is being tended — new pieces are on their way.</p>
+      )}
+      <p class="text-center mt-48"><a class="btn btn-outline" href="/journal/">Read the Journal</a></p>
+    </div>
+  </section>
+
+  <!-- Sustainability Commitment -->
+  <section class="section-soft">
+    <div class="container">
+      <div class="split reverse">
+        <div class="split-media">
+          <Placeholder label="Sustainability" tone="sage" shape="wide" />
+        </div>
+        <div class="split-body">
+          <span class="kicker">Our Commitment</span>
+          <h2>Sustainability isn’t a trend — it’s a responsibility</h2>
+          <p class="lede">
+            Natural, renewable materials. Ethical makers. UK-first sourcing. Low-impact packaging.
+            Design built to last through seasons and years.
+          </p>
+          <p class="mt-40"><a class="btn btn-outline btn-lg" href="/sustainability/">Our Sustainability Promise</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <Newsletter />
+</Base>

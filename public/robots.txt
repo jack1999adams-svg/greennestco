@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /nova-preview/
+
+Sitemap: https://greennestco.pages.dev/sitemap-index.xml

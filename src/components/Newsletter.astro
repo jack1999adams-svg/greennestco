@@ -1,0 +1,58 @@
+---
+// Newsletter signup → NovaPortal form endpoint /api/f/newsletter. Submissions
+// land in the portal's inbox. The `newsletter` form must exist in the instance
+// DB (see the runbook's "seed forms" step); until then the endpoint returns 404
+// and the form shows a graceful fallback.
+const PORTAL = 'https://novaportal-greennestco.collectiq.workers.dev';
+const action = `${PORTAL}/api/f/newsletter`;
+---
+
+<section id="newsletter">
+  <div class="container">
+    <div class="newsletter">
+      <span class="kicker">Stay in the nest</span>
+      <h2>A calmer inbox, once in a while</h2>
+      <p>
+        Slow-living notes, new arrivals and the occasional Journal piece — thoughtful, never noisy.
+        Unsubscribe any time.
+      </p>
+      <form class="newsletter-form" method="post" action={action} data-action={action}>
+        <label class="newsletter-hp" aria-hidden="true">
+          Website<input name="website" type="text" tabindex="-1" autocomplete="off" />
+        </label>
+        <input name="email" type="email" required placeholder="Your email address" autocomplete="email" aria-label="Email address" />
+        <button class="btn btn-clay" type="submit">Subscribe</button>
+      </form>
+      <p class="form-status" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector('.newsletter-form') as HTMLFormElement | null;
+  const status = document.querySelector('#newsletter .form-status') as HTMLElement | null;
+  const action = form?.dataset.action ?? '';
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!status) return;
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    btn.disabled = true;
+    const original = btn.textContent;
+    btn.textContent = 'Sending…';
+    status.className = 'form-status';
+    try {
+      const res = await fetch(action, { method: 'POST', body: new FormData(form) });
+      if (!res.ok) throw new Error(String(res.status));
+      status.textContent = 'Thank you — you’re on the list. Welcome to the nest.';
+      status.className = 'form-status ok';
+      form.reset();
+      btn.textContent = 'Subscribed';
+    } catch {
+      status.innerHTML = 'Sorry — sign-up isn’t available right now. Please try again shortly.';
+      status.className = 'form-status err';
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  });
+</script>

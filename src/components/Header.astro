@@ -1,0 +1,42 @@
+---
+import Logo from './Logo.astro';
+
+const links = [
+  { href: '/rooms/', label: 'Shop by Room' },
+  { href: '/categories/', label: 'Shop by Category' },
+  { href: '/about/', label: 'About' },
+  { href: '/sustainability/', label: 'Sustainability' },
+  { href: '/journal/', label: 'Journal' },
+  { href: '/contact/', label: 'Contact' },
+];
+const current = Astro.url.pathname;
+const isCurrent = (href: string) => current === href || (href !== '/' && current.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/" aria-label="Green Nest Co — home">
+      <Logo />
+    </a>
+    <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+      {links.map((l) => (
+        <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-outline" href="/rooms/">Shop the Collection</a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('main-nav');
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(!!open));
+  });
+</script>

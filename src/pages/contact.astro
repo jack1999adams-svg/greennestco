@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<Base
+  title="Contact — Green Nest Co"
+  description="Get in touch with Green Nest Co — product and partner enquiries, partnership requests, press and collaborations. We read every message."
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">Contact</span>
+      <h1>Let’s talk</h1>
+      <p class="lede">
+        Whether it’s a question about a piece, a partnership, or just a note — we’d love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="split">
+        <div class="split-body">
+          <h2>A curated platform, at a human pace</h2>
+          <p>
+            Green Nest Co is a curated affiliate platform — we don’t hold stock, ship products, or
+            handle returns. For anything about a specific order, the partner brand’s own team will
+            look after you. For everything else, we’re right here.
+          </p>
+          <ul class="checklist" style="margin-top:24px">
+            <li><span set:html={`<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='m3 7 9 6 9-6'/></svg>`} /> hello@greennestco.co.uk</li>
+            <li><span set:html={`<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2.5 1.5 5 .5 8.5A7 7 0 0 1 11 20z'/><path d='M2 22c1.5-3.5 3-5 8-6'/></svg>`} /> Partner brand? We’d love to hear from aligned UK makers.</li>
+            <li><span set:html={`<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 7v5l3 2'/></svg>`} /> We aim to reply within two working days.</li>
+          </ul>
+        </div>
+        <div>
+          <ContactForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
