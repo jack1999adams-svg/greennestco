@@ -45,6 +45,31 @@
       { "key": "bg_soft", "label": "Soft linen background", "type": "color", "cssVar": "--bg-soft", "default": "#f2ece0" },
       { "key": "font_body", "label": "Body font", "type": "font", "cssVar": "--font-body", "default": "'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
       { "key": "radius", "label": "Corner roundness", "type": "select", "cssVar": "--radius", "default": "18px", "options": ["0px", "10px", "18px", "26px"] }
+    ],
+    // Page templates this site implements (portal Pages picker + fields).
+    // Each key has a matching layout in src/lib/page-templates.astro; fields
+    // are delivered per page in the content API's `extras`.
+    "PAGE_TEMPLATES": [
+      { "key": "standard", "label": "Standard page", "description": "Title, optional hero image, and rich text — for About, Sustainability, policies.", "fields": [] },
+      {
+        "key": "landing", "label": "Landing page",
+        "description": "Hero band with heading, sub-text and a call-to-action button, then rich content.",
+        "fields": [
+          { "key": "hero_heading", "label": "Hero heading", "type": "text" },
+          { "key": "hero_subheading", "label": "Hero sub-text", "type": "textarea" },
+          { "key": "cta_label", "label": "Button label", "type": "text" },
+          { "key": "cta_href", "label": "Button link", "type": "text" }
+        ]
+      },
+      {
+        "key": "contact", "label": "Contact page",
+        "description": "Rich text plus a contact details card (email, phone, address).",
+        "fields": [
+          { "key": "email", "label": "Contact email", "type": "text" },
+          { "key": "phone", "label": "Phone", "type": "text" },
+          { "key": "address", "label": "Address", "type": "textarea" }
+        ]
+      }
     ]
   },
   // Secrets (per instance, set via wrangler): SETUP_TOKEN, READ_TOKEN,

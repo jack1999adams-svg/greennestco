@@ -1,0 +1,66 @@
+---
+// Renders a portal-managed page by its template. Each template key here must
+// exist in .novaportal/instance.jsonc → PAGE_TEMPLATES so the portal offers it.
+// Field values come from the page's `extras` (the portal's template fields).
+interface Props {
+  template: string;
+  title: string;
+  html: string;
+  image?: string;
+  imageAlt?: string;
+  extras?: Record<string, any>;
+}
+const { template, title, html, image, imageAlt = '', extras = {} } = Astro.props;
+---
+
+{template === 'landing' ? (
+  <section class="np-hero">
+    <div class="container">
+      <h1>{extras.hero_heading || title}</h1>
+      {extras.hero_subheading && <p class="np-hero-sub">{extras.hero_subheading}</p>}
+      {extras.cta_label && (
+        <a class="np-cta" href={extras.cta_href || '#'}>{extras.cta_label}</a>
+      )}
+    </div>
+  </section>
+) : (
+  <header class="np-head">
+    {image && <img class="np-hero-img" src={image} alt={imageAlt} width="1600" height="700" />}
+    <div class="container"><h1>{title}</h1></div>
+  </header>
+)}
+
+<article class="container np-page">
+  <div class="prose" set:html={html} />
+
+  {template === 'contact' && (extras.email || extras.phone || extras.address) && (
+    <aside class="np-contact-card">
+      <h2>Get in touch</h2>
+      <dl>
+        {extras.email && (<><dt>Email</dt><dd><a href={`mailto:${extras.email}`}>{extras.email}</a></dd></>)}
+        {extras.phone && (<><dt>Phone</dt><dd><a href={`tel:${extras.phone}`}>{extras.phone}</a></dd></>)}
+        {extras.address && (<><dt>Address</dt><dd style="white-space:pre-line">{extras.address}</dd></>)}
+      </dl>
+    </aside>
+  )}
+</article>
+
+<style>
+  .container { max-width: 68rem; margin-inline: auto; padding-inline: 1.25rem; }
+  .np-head { padding-block: 2.5rem 1rem; }
+  .np-hero-img { width: 100%; height: auto; max-height: 26rem; object-fit: cover; border-radius: var(--radius, 18px); }
+  .np-head h1, .np-hero h1 { font-family: 'Playfair Display', serif; color: var(--forest, #2e4034); font-size: clamp(2rem, 5vw, 3rem); margin: 1.25rem 0 0; }
+  .np-hero { background: var(--bg-soft, #f2ece0); padding-block: 4rem; text-align: center; }
+  .np-hero-sub { max-width: 40rem; margin: 1rem auto 0; color: var(--text, #4c4f46); font-size: 1.125rem; }
+  .np-cta { display: inline-block; margin-top: 1.5rem; background: var(--brand, #8a9a7b); color: #fff; padding: 0.7rem 1.6rem; border-radius: 999px; font-weight: 600; text-decoration: none; }
+  .np-cta:hover { background: var(--brand-dark, #6d7d5f); }
+  .np-page { padding-block: 2.5rem 4rem; display: grid; gap: 2.5rem; grid-template-columns: minmax(0, 1fr); }
+  .np-page:has(.np-contact-card) { grid-template-columns: minmax(0, 1fr) 20rem; align-items: start; }
+  @media (max-width: 780px) { .np-page:has(.np-contact-card) { grid-template-columns: minmax(0, 1fr); } }
+  .np-contact-card { background: var(--bg-soft, #f2ece0); border-radius: var(--radius, 18px); padding: 1.5rem 1.6rem; }
+  .np-contact-card h2 { font-family: 'Playfair Display', serif; color: var(--forest, #2e4034); margin: 0 0 0.75rem; font-size: 1.3rem; }
+  .np-contact-card dl { margin: 0; display: grid; gap: 0.4rem 0; }
+  .np-contact-card dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brand-dark, #6d7d5f); margin-top: 0.6rem; }
+  .np-contact-card dd { margin: 0; color: var(--text, #4c4f46); }
+  .np-contact-card a { color: var(--brand-dark, #6d7d5f); }
+</style>

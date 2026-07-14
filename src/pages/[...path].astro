@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import PageRender from '../components/PageRender.astro';
+import { loadPages } from '../lib/pages.mjs';
+
+// Portal-managed pages, rendered at their own paths. These are ADDITIVE: the
+// site's file-based routes (about.astro, contact.astro, /rooms/…) always win,
+// so a portal page must use a fresh top-level path. OWNED lists the site's own
+// first path segments; portal pages under those are skipped to avoid clashes.
+// (Defined inside getStaticPaths — Astro runs it in isolation from other vars.)
+export async function getStaticPaths() {
+  const OWNED = new Set([
+    'about', 'contact', 'sustainability', 'terms', 'affiliate-disclosure',
+    'outdoor-living', 'brand-foundation', 'rooms', 'categories', 'journal', 'nova-preview',
+  ]);
+  const pages = await loadPages();
+  return pages
+    .map((p) => ({ ...p, slug: String(p.path).replace(/^\/+|\/+$/g, '') }))
+    .filter((p) => p.slug && !OWNED.has(p.slug.split('/')[0]))
+    .map((p) => ({ params: { path: p.slug }, props: { page: p } }));
+}
+
+const { page } = Astro.props;
+---
+
+<Base title={page.title} description={page.description} image={page.image}>
+  <PageRender
+    template={page.template}
+    title={page.title}
+    html={page.html}
+    image={page.image}
+    imageAlt={page.imageAlt}
+    extras={page.extras}
+  />
+</Base>

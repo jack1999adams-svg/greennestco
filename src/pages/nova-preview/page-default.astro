@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Baked preview template for portal-managed PAGES. The portal fetches this,
+// substitutes {{NOVA_*}} with the draft page, and serves it behind the login.
+// v1 renders the standard page layout for any template (title + hero + body);
+// per-template previews (landing hero, contact card) can be added as
+// page-landing.astro / page-contact.astro alongside this file.
+---
+
+<Base title={'{{NOVA_TITLE}}'} description={'{{NOVA_DESCRIPTION}}'} noindex>
+  <header class="np-head">
+    <img class="np-hero-img" src={'{{NOVA_IMAGE}}'} alt={'{{NOVA_IMAGE_ALT}}'} width="1600" height="700" />
+    <div class="container"><h1>{'{{NOVA_TITLE}}'}</h1></div>
+  </header>
+  <article class="container np-page">
+    <div class="prose"><Fragment set:html={'{{NOVA_BODY}}'} /></div>
+  </article>
+</Base>
+
+<style>
+  .container { max-width: 68rem; margin-inline: auto; padding-inline: 1.25rem; }
+  .np-head { padding-block: 2.5rem 1rem; }
+  .np-hero-img { width: 100%; height: auto; max-height: 26rem; object-fit: cover; border-radius: var(--radius, 18px); }
+  .np-head h1 { font-family: 'Playfair Display', serif; color: var(--forest, #2e4034); font-size: clamp(2rem, 5vw, 3rem); margin: 1.25rem 0 0; }
+  .np-page { padding-block: 2.5rem 4rem; }
+</style>
