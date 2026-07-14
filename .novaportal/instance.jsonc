@@ -3,8 +3,10 @@
   // this into a full wrangler config (injecting worker entry + migrations
   // paths) at build/deploy time — see the novaportal repo's registry.json.
   "name": "novaportal-greennestco",
-  // CI shape for `novaportal wire`: GitHub Actions builds + deploys this site.
-  "ci": { "kind": "actions", "ghRepo": "jack1999adams-svg/greennestco" },
+  // Git-connected Cloudflare Pages: Cloudflare builds + deploys on push, and
+  // publishing in the portal fires the native deploy hook (DEPLOY_HOOK_URL
+  // worker secret) — no CF token in the repo, no GitHub Actions, no PAT.
+  "ci": { "kind": "pages", "pagesProject": "greennestco", "branch": "main" },
   "apps": ["redirects"],
   "compatibility_date": "2025-05-01",
   "assets": {
@@ -30,12 +32,6 @@
     // Previews fetch their baked /nova-preview/ template from the live site.
     // Update SITE_URL + PREVIEW_SITE_URL to the custom domain once connected.
     "PREVIEW_SITE_URL": "https://greennestco.pages.dev",
-    "GH_REPO": "jack1999adams-svg/greennestco",
-    // Publish → rebuild fires a repository_dispatch via the Nova GitHub App
-    // (installed on all repos) — no per-instance PAT needed. GH_APP_PRIVATE_KEY
-    // is a worker secret.
-    "GH_APP_ID": "4279465",
-    "GH_APP_INSTALLATION_ID": "146072019",
     "LEAD_TO_EMAIL": "hello@greennestco.co.uk",
     "LEAD_FROM_EMAIL": "onboarding@resend.dev",
     // Design tokens editable in the portal's Design page. Each cssVar must exist
