@@ -15,8 +15,7 @@
     {
       "binding": "DB",
       "database_name": "novaportal-greennestco",
-      // Fill in after `wrangler d1 create novaportal-greennestco` (runbook step 1).
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+      "database_id": "cdf69bbf-cf5d-482c-8739-69206de34949"
     }
   ],
   "r2_buckets": [
