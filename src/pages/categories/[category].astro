@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import { categories, categoryBySlug } from '../../data/categories.mjs';
+import { productsInCategory } from '../../data/products.mjs';
+
+export function getStaticPaths() {
+  return categories.map((category) => ({ params: { category: category.slug }, props: { category } }));
+}
+
+const { category } = Astro.props;
+const products = productsInCategory(category.slug);
+---
+
+<Base
+  title={`${category.name} — Green Nest Co`}
+  description={`${category.name} at GNc — ${category.blurb} Includes: ${category.includes}`}
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">Shop by Category</span>
+      <h1>{category.name}</h1>
+      <p class="lede">{category.blurb}</p>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <p class="muted" style="margin:0"><strong style="color:var(--forest)">Includes:</strong> {category.includes}</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="container">
+      {products.length > 0 ? (
+        <div class="grid-3">
+          {products.map((product) => <ProductCard product={product} />)}
+        </div>
+      ) : (
+        <p class="muted">This edit is being curated — check back soon.</p>
+      )}
+      <p class="text-center mt-48"><a class="btn btn-outline" href="/rooms/">Shop by Room instead</a></p>
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>

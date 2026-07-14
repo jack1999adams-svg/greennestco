@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+
+const materials = [
+  'Natural woods — pine, reclaimed wood, ethically sourced bamboo',
+  'Recycled natural textiles — recycled cotton, reclaimed fibres',
+  'Natural clays & stoneware',
+  'Natural fibres — jute, seagrass, hemp, linen',
+  'Non-toxic ingredients — plant-based waxes, essential oils',
+];
+const notUsed = [
+  'Recycled plastic textiles',
+  'Synthetic fibres marketed as “eco”',
+  'Mass-produced, low-quality items',
+  'Harsh chemicals',
+  'Fast-homeware trends',
+];
+const check = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>`;
+---
+
+<Base
+  title="Sustainability — Green Nest Co"
+  description="Thoughtful materials. Ethical makers. Low-impact choices. Sustainability at GNc is not a trend — it is a responsibility. Natural, renewable materials and UK-first sourcing."
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">Sustainability at GNc</span>
+      <h1>Thoughtful materials. Ethical makers. Low-impact choices.</h1>
+      <p class="lede">We believe sustainability is not a trend — it is a responsibility.</p>
+    </div>
+  </section>
+
+  <!-- Our Commitment -->
+  <section>
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Our Commitment</span>
+        <h2>Doing right by the home, and the world around it</h2>
+        <p class="lede">
+          We commit to natural, renewable materials; recycled natural fibres; ethical production;
+          UK-first sourcing; low-impact packaging; long-lasting design; and transparency.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Materials That Matter (grid) -->
+  <section class="section-soft">
+    <div class="container">
+      <div class="split">
+        <div class="split-body">
+          <span class="kicker">Materials That Matter</span>
+          <h2>What we use</h2>
+          <ul class="checklist">
+            {materials.map((m) => <li><span set:html={check} />{m}</li>)}
+          </ul>
+        </div>
+        <div class="split-body">
+          <span class="kicker">Where we draw the line</span>
+          <h2>What we never use</h2>
+          <div class="pill-row">
+            {notUsed.map((n) => <span class="pill">{n}</span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ethical / UK / Longevity -->
+  <section>
+    <div class="container">
+      <div class="grid-3">
+        <div class="card">
+          <h3>Ethical production</h3>
+          <p>We partner with artisans and workshops who share our values — people, not just supply chains.</p>
+        </div>
+        <div class="card">
+          <h3>UK-first sourcing</h3>
+          <p>We support local communities by choosing UK makers and growers wherever possible.</p>
+        </div>
+        <div class="card">
+          <h3>Designed for longevity</h3>
+          <p>We curate timeless pieces that last through seasons and years — the opposite of throwaway.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promise band -->
+  <section class="band">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Our Promise</span>
+        <h2>Fewer, better things — sourced with care</h2>
+        <p class="lede">
+          Every piece we curate is chosen against a single question: does it honour the makers,
+          the materials, and the world it comes from? If not, it doesn’t make the collection.
+        </p>
+      </div>
+      <p class="text-center"><a class="btn btn-outline-light btn-lg" href="/brand-foundation/">Read our Brand Foundation</a></p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,64 @@
+---
+import Logo from './Logo.astro';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="/" style="color:#fff" aria-label="Green Nest Co — home">
+          <Logo />
+        </a>
+        <p>Thoughtfully curated pieces for indoor and outdoor living — natural materials, honest craftsmanship, and the quiet beauty of everyday rituals.</p>
+        <p class="footer-tagline">Natural Living • Timeless Design</p>
+      </div>
+
+      <div>
+        <h4>Shop</h4>
+        <ul class="footer-links">
+          <li><a href="/rooms/">Shop by Room</a></li>
+          <li><a href="/categories/">Shop by Category</a></li>
+          <li><a href="/outdoor-living/">Outdoor Living</a></li>
+          <li><a href="/journal/">Journal</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Brand</h4>
+        <ul class="footer-links">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/sustainability/">Sustainability</a></li>
+          <li><a href="/brand-foundation/">Brand Foundation</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>More</h4>
+        <ul class="footer-links">
+          <li><a href="/affiliate-disclosure/">Affiliate Disclosure</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/#newsletter">Newsletter</a></li>
+        </ul>
+        <div class="footer-social" aria-label="Social links">
+          <a href="https://instagram.com/" aria-label="Instagram" rel="noopener noreferrer" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <a href="https://pinterest.com/" aria-label="Pinterest" rel="noopener noreferrer" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M8 20c1-3 2.5-8 2.5-8M12 3a7 7 0 0 0-3 13.5" /><path d="M9.5 14c.6 1 1.8 1.6 3 1.4 2.4-.4 4-2.9 3.6-5.6C15.7 7 13 5.3 10.4 6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {year} Green Nest Co (GNc). A calmer home creates a calmer life.</span>
+      <span class="footer-disclosure">GNc is a curated affiliate platform — we may earn a small commission from partner brands at no extra cost to you.</span>
+    </div>
+  </div>
+</footer>

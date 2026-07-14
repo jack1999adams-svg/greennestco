@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import Newsletter from '../../components/Newsletter.astro';
+
+const posts = (await getCollection('journal')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title="Journal — Green Nest Co"
+  description="Notes on slow, intentional living from Green Nest Co — natural materials, the makers we love, and small rituals for a calmer home."
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">The Journal</span>
+      <h1>Notes on slow, intentional living</h1>
+      <p class="lede">
+        Slow-living notes, material stories and the makers we love — a quiet read for a calmer home.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      {posts.length > 0 ? (
+        <div class="grid-3">
+          {posts.map((post) => (
+            <a class="journal-card" href={`/journal/${post.id}/`}>
+              {post.data.image
+                ? <img src={post.data.image} alt={post.data.imageAlt} loading="lazy" />
+                : <Placeholder label={post.data.title} tone="sand" shape="wide" />}
+              <div class="journal-card-body">
+                <div class="journal-meta">
+                  <span class="chip clay">{post.data.categoryLabel}</span>
+                  <span>{fmt(post.data.date)}</span>
+                </div>
+                <h3>{post.data.title}</h3>
+                <p>{post.data.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-center muted">The Journal is being tended — new pieces are on their way.</p>
+      )}
+    </div>
+  </section>
+
+  <Newsletter />
+</Base>

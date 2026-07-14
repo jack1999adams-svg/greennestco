@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import Placeholder from '../components/Placeholder.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { productsInCategory } from '../data/products.mjs';
+
+const outdoor = productsInCategory('outdoor-living');
+
+const comforts = [
+  { t: 'Weather-resistant cushions', d: 'Natural covers made for open-air living.' },
+  { t: 'Recycled cotton throws', d: 'A layer of warmth as the evening cools.' },
+  { t: 'Woven rugs', d: 'Soft underfoot, simply hosed clean.' },
+  { t: 'Natural-fibre baskets', d: 'Storage that belongs in the garden too.' },
+];
+---
+
+<Base
+  title="Outdoor Living — Green Nest Co"
+  description="Your outdoor space is an extension of your home. Natural-materials furniture, garden ornaments, outdoor candles and lanterns, plants and botanical living from GNc."
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">Outdoor Living</span>
+      <h1>A sanctuary under open sky</h1>
+      <p class="lede">
+        Your outdoor space is an extension of your home — a place to unwind, gather,
+        and reconnect with nature.
+      </p>
+    </div>
+  </section>
+
+  <!-- Outdoor Furniture (2-col) -->
+  <section>
+    <div class="container">
+      <div class="split">
+        <div class="split-body">
+          <span class="kicker">Outdoor Furniture</span>
+          <h2>Natural materials, crafted for open-air living</h2>
+          <p class="lede">
+            Solid, honest pieces that weather beautifully and invite long, slow evenings
+            outdoors — built to belong in the garden, not just survive it.
+          </p>
+        </div>
+        <div class="split-media">
+          <Placeholder label="Outdoor Furniture" tone="sage" shape="wide" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Garden Ornaments & Candles (3-col feel) -->
+  <section class="section-soft">
+    <div class="container">
+      <div class="grid-3">
+        <div class="card">
+          <h3>Garden Ornaments & Pots</h3>
+          <p>Hand-crafted pieces with texture and character — terracotta, stoneware and reclaimed materials.</p>
+        </div>
+        <div class="card">
+          <h3>Outdoor Candles & Lanterns</h3>
+          <p>Natural wax and essential oils in reusable vessels, casting warm evening light.</p>
+        </div>
+        <div class="card">
+          <h3>Plants & Botanical Living</h3>
+          <p>UK-grown where possible, in eco-friendly planters — living structure for the space.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Outdoor Comforts (4-col) -->
+  <section>
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Outdoor Comforts</span>
+        <h2>The soft touches that make it linger</h2>
+      </div>
+      <div class="grid-4">
+        {comforts.map((c) => (
+          <div class="value">
+            <h3>{c.t}</h3>
+            <p>{c.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop outdoor -->
+  {outdoor.length > 0 && (
+    <section class="section-linen">
+      <div class="container">
+        <div class="section-head center">
+          <span class="kicker">Shop Outdoor</span>
+          <h2>Curated for the garden</h2>
+        </div>
+        <div class="grid-3">
+          {outdoor.map((product) => <ProductCard product={product} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Sustainability outdoors + CTA -->
+  <section class="band">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Sustainability Outdoors</span>
+        <h2>Kind to the garden, and everything in it</h2>
+        <p class="lede">
+          Natural, low-impact materials that age gracefully in the elements — chosen so your
+          outdoor sanctuary treads as lightly as the calm it creates.
+        </p>
+      </div>
+      <p class="text-center"><a class="btn btn-outline-light btn-lg" href="/rooms/garden-outdoor/">Shop Garden & Outdoor</a></p>
+    </div>
+  </section>
+</Base>

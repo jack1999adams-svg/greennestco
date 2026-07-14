@@ -1,0 +1,23 @@
+---
+// On-brand placeholder media tile. GNc doesn't hold product photography yet, so
+// tiles render a calm linen/sage motif with a label instead of a broken image
+// or a fake photo. Swap for real <img> once partner/licensed imagery is added.
+interface Props {
+  label?: string;
+  tone?: 'sand' | 'sage';
+  shape?: 'default' | 'wide' | 'tall';
+  class?: string;
+}
+const { label, tone = 'sand', shape = 'default', class: cls = '' } = Astro.props;
+const shapeClass = shape === 'wide' ? 'wide' : shape === 'tall' ? 'tall' : '';
+---
+<div class:list={['ph', tone === 'sage' && 'sage', shapeClass, cls]} role="img" aria-label={label ?? 'Green Nest Co'}>
+  {label && <span class="ph-label">{label}</span>}
+  <svg class="ph-leaf" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+    <path
+      d="M78 20C48 22 26 40 24 68c-1 10 3 16 3 16s7-1 15-6c22-13 33-38 36-58Z"
+      fill="currentColor"
+    />
+    <path d="M62 34C48 44 36 58 30 76" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity="0.6" />
+  </svg>
+</div>

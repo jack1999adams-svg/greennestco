@@ -1,0 +1,57 @@
+{
+  // NovaPortal instance config for this site. The NovaPortal CLI materialises
+  // this into a full wrangler config (injecting worker entry + migrations
+  // paths) at build/deploy time — see the novaportal repo's registry.json.
+  "name": "novaportal-greennestco",
+  // CI shape for `novaportal wire`: GitHub Actions builds + deploys this site.
+  "ci": { "kind": "actions", "ghRepo": "jack1999adams-svg/greennestco" },
+  "apps": ["redirects"],
+  "compatibility_date": "2025-05-01",
+  "assets": {
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "novaportal-greennestco",
+      "database_id": "cdf69bbf-cf5d-482c-8739-69206de34949"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "novaportal-greennestco-media"
+    }
+  ],
+  "vars": {
+    "SITE_NAME": "Green Nest Co",
+    "SITE_URL": "https://greennestco.pages.dev",
+    // Previews fetch their baked /nova-preview/ template from the live site.
+    // Update SITE_URL + PREVIEW_SITE_URL to the custom domain once connected.
+    "PREVIEW_SITE_URL": "https://greennestco.pages.dev",
+    "GH_REPO": "jack1999adams-svg/greennestco",
+    // Publish → rebuild fires a repository_dispatch via the Nova GitHub App
+    // (installed on all repos) — no per-instance PAT needed. GH_APP_PRIVATE_KEY
+    // is a worker secret.
+    "GH_APP_ID": "4279465",
+    "GH_APP_INSTALLATION_ID": "146072019",
+    "LEAD_TO_EMAIL": "hello@greennestco.co.uk",
+    "LEAD_FROM_EMAIL": "onboarding@resend.dev",
+    // Design tokens editable in the portal's Design page. Each cssVar must exist
+    // in src/styles/global.css; default mirrors the stylesheet's built-in value.
+    "THEME_SCHEMA": [
+      { "key": "brand", "label": "Brand colour (sage)", "type": "color", "cssVar": "--brand", "default": "#8a9a7b" },
+      { "key": "brand_dark", "label": "Brand colour (hover)", "type": "color", "cssVar": "--brand-dark", "default": "#6d7d5f" },
+      { "key": "forest", "label": "Deep forest (headings & footer)", "type": "color", "cssVar": "--forest", "default": "#2e4034" },
+      { "key": "clay", "label": "Warm clay accent", "type": "color", "cssVar": "--clay", "default": "#b47b5e" },
+      { "key": "text", "label": "Body text colour", "type": "color", "cssVar": "--text", "default": "#4c4f46" },
+      { "key": "bg_soft", "label": "Soft linen background", "type": "color", "cssVar": "--bg-soft", "default": "#f2ece0" },
+      { "key": "font_body", "label": "Body font", "type": "font", "cssVar": "--font-body", "default": "'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" },
+      { "key": "radius", "label": "Corner roundness", "type": "select", "cssVar": "--radius", "default": "18px", "options": ["0px", "10px", "18px", "26px"] }
+    ]
+  },
+  // Secrets (per instance, set via wrangler): SETUP_TOKEN, READ_TOKEN,
+  // GH_DISPATCH_TOKEN (rebuilds), RESEND_API_KEY (optional).
+  "observability": { "enabled": true }
+}

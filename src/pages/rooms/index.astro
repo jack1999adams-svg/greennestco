@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import Placeholder from '../../components/Placeholder.astro';
+import { rooms } from '../../data/rooms.mjs';
+---
+
+<Base
+  title="Shop by Room — Green Nest Co"
+  description="Shop natural-living homeware by room: living room, bedroom, bathroom, kitchen & dining, hallway, home office, and garden & outdoor."
+>
+  <section class="page-hero">
+    <div class="container">
+      <hr class="eyebrow-rule" />
+      <span class="kicker">Shop by Room</span>
+      <h1>Calm, curated, room by room</h1>
+      <p class="lede">
+        Every space is lived in differently. Start where you are — we’ll help make it feel like a sanctuary.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="room-grid">
+        {rooms.map((room) => (
+          <a class="tile" href={`/rooms/${room.slug}/`}>
+            <Placeholder label={room.name} tone={room.tone === 'clay' ? 'sand' : 'sage'} />
+            <div class="tile-body">
+              <h3>{room.name}</h3>
+              <p>{room.tagline}</p>
+              <span class="tile-more">Explore →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
