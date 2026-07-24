@@ -34,6 +34,10 @@
     "PREVIEW_SITE_URL": "https://greennestco.pages.dev",
     "LEAD_TO_EMAIL": "hello@greennestco.co.uk",
     "LEAD_FROM_EMAIL": "onboarding@resend.dev",
+    // Sender for SYSTEM email (password resets) when the client has not
+    // configured their own. Must be a domain verified in the SAME Resend
+    // account as the AUTH_RESEND_KEY secret — they are checked together.
+    "AUTH_FROM_EMAIL": "noreply@novawebsites.co.uk",
     // Design tokens editable in the portal's Design page. Each cssVar must exist
     // in src/styles/global.css; default mirrors the stylesheet's built-in value.
     "THEME_SCHEMA": [
