@@ -7,7 +7,7 @@
   // publishing in the portal fires the native deploy hook (DEPLOY_HOOK_URL
   // worker secret) — no CF token in the repo, no GitHub Actions, no PAT.
   "ci": { "kind": "pages", "pagesProject": "greennestco", "branch": "main" },
-  "apps": ["redirects"],
+  "apps": ["redirects", "seo"],
   "compatibility_date": "2025-05-01",
   "assets": {
     "binding": "ASSETS",
